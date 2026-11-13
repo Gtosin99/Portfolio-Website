@@ -1,77 +1,61 @@
-import { ArrowRight, Mail, Github } from 'lucide-react';
+import { ArrowDown, ArrowRight, Code2, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import { projects } from '../data/projects';
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-24 py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-      
-      {/* 1. ABOUT ME SECTION */}
-      <section className="flex flex-col gap-6 pt-10">
-        <h1 className="text-4xl md:text-6xl font-bold text-slate-50 tracking-tight">
-          Hi, I'm <span className="text-emerald-500">Tosin</span>.
-        </h1>
-        <h2 className="text-xl md:text-2xl text-slate-300 font-medium">
-          Software Engineering Undergraduate at Pan-Atlantic University.
-        </h2>
-        <p className="text-slate-400 max-w-2xl text-lg leading-relaxed">
-          I build robust, scalable software and explore the intersection of artificial intelligence, machine learning, and practical application development. I am passionate about applying first-principles thinking and clean architecture to solve complex, real-world problems.
-        </p>
-        <div className="flex gap-4 mt-4">
-          <Button href="#contact">Get in Touch</Button>
-          <Button variant="outline" href="https://github.com/therealtosin">View GitHub</Button>
+    <div className="portfolio-page">
+      <section className="hero-section" id="about" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="eyebrow">Software Engineer</p>
+          <h1 id="hero-title">Hi, I’m<br /><span>Akindele Tosin.</span></h1>
+          <p className="hero-summary">
+            I’m a Software Engineering student in Nigeria interested in building thoughtful software and understanding the ideas behind it. I focus on software engineering, AI and machine learning, deep learning, and problem-solving.
+          </p>
+          <div className="hero-actions">
+            <Button href="mailto:tosinakindele826@gmail.com"><Mail size={16} /> Get in touch</Button>
+            <Button variant="outline" href="#projects">My Projects <ArrowDown size={15} /></Button>
+          </div>
+        </div>
+        <div className="portrait-placeholder">
+          <img src="/images/profile-photo.jpg" alt="Portrait placeholder for Akindele Tosin" />
         </div>
       </section>
 
-      {/* 2. PROJECTS SECTION */}
-      <section id="projects" className="flex flex-col gap-8">
-        <div className="flex items-center gap-4">
-          <h3 className="text-2xl font-bold text-slate-50">Selected Projects</h3>
-          <div className="h-[1px] bg-slate-800 flex-grow"></div>
+      <section className="content-section projects-section" id="projects" aria-labelledby="projects-title">
+        <div className="section-heading">
+          <div><h2 id="projects-title">Projects</h2></div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
-            <div key={project.id} className="group flex flex-col bg-slate-800/50 border border-slate-700/50 rounded-lg overflow-hidden hover:border-emerald-500/50 transition-colors">
-              <div className="h-48 overflow-hidden">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        <div className="project-grid">
+          {projects.map((project, index) => (
+            <article className="project-card" key={project.id}>
+              <div className="project-visual">
+                <img src={project.image} alt={`${project.title} project screenshot`} />
+                <span className="project-number">0{index + 1}</span>
               </div>
-              <div className="p-6 flex flex-col flex-grow gap-4">
-                <div>
-                  <h4 className="text-lg font-bold text-slate-50 mb-2">{project.title}</h4>
-                  <p className="text-slate-400 text-sm">{project.shortDescription}</p>
+              <div className="project-card-body">
+                <div className="project-title-row"><h3>{project.title}</h3><span className="project-type">{index === 0 ? 'Food application' : 'Gardening platform'}</span></div>
+                <p>{project.shortDescription}</p>
+                <ul className="tech-list" aria-label="Technologies used">{project.technologies.map((technology) => <li key={technology}>{technology}</li>)}</ul>
+                <div className="project-links">
+                  {project.id === 'garden-gems' && <Link to="/project/garden-gems">Project details <ArrowRight size={15} /></Link>}
+                  {project.liveLink && <a href={project.liveLink} target="_blank" rel="noreferrer">Visit website <ArrowRight size={15} /></a>}
+                  {project.githubLink && <a href={project.githubLink} target="_blank" rel="noreferrer">Source code <ArrowRight size={15} /></a>}
                 </div>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {project.technologies.slice(0, 3).map(tech => (
-                    <span key={tech} className="text-xs font-medium text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <Link to={`/project/${project.id}`} className="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-emerald-500 transition-colors mt-2">
-                  View Details <ArrowRight size={16} />
-                </Link>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* 3. CALL TO ACTION (CTA) */}
-      <section id="contact" className="flex flex-col items-center text-center gap-6 py-12 bg-slate-800/30 rounded-2xl border border-slate-800">
-        <h3 className="text-3xl font-bold text-slate-50">Let's build something.</h3>
-        <p className="text-slate-400 max-w-md">
-          I am currently open to new opportunities, collaborations, and conversations about software engineering and AI.
-        </p>
-        <div className="flex gap-4 mt-2">
-          {/* Replace with your actual email */}
-          <Button href="mailto:your.email@pau.edu.ng" className="gap-2">
-            <Mail size={18} /> Send an Email
-          </Button>
+      <section className="contact-section" id="contact" aria-labelledby="contact-title">
+        <div><p className="eyebrow">Have a project or question?</p><h2 id="contact-title">Let’s start a<br /><span>conversation.</span></h2></div>
+        <div className="contact-actions">
+          <a className="contact-link primary" href="mailto:tosinakindele826@gmail.com"><Mail size={17} /> tosinakindele826@gmail.com <ArrowRight size={16} /></a>
+          <a className="contact-link" href="https://github.com/Gtosin99" target="_blank" rel="noreferrer"><Code2 size={17} /> Explore my GitHub <ArrowRight size={16} /></a>
         </div>
       </section>
-
     </div>
   );
 }

@@ -3,12 +3,12 @@ export interface Project {
   title: string;
   shortDescription: string;
   technologies: string[];
-  image: string; // Placeholder for our screenshots
+  image: string;
   githubLink?: string;
   liveLink?: string;
-  // Detailed fields specifically for the dedicated project page
   fullDescription?: string;
   problemSolved?: string;
   features?: string[];
   learned?: string;
+  screenshots?: { label: string; image: string }[];
 }
